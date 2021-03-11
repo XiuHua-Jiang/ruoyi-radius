@@ -1,0 +1,2 @@
+直接导入ruoyiradius-init.sql即可
+其它几个sql文件是若依框架本身的数据库

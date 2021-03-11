@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.radius.toughradius.mapper.MealMapper">
+  <resultMap id="BaseResultMap" type="com.ruoyi.radius.toughradius.domain.Meal">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="meal_name" jdbcType="VARCHAR" property="mealName" />
+    <result column="use_count" jdbcType="INTEGER" property="useCount" />
+    <result column="use_hour" jdbcType="INTEGER" property="useHour" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="enable" jdbcType="INTEGER" property="enable" />
+    <result column="sort_number" jdbcType="INTEGER" property="sortNumber" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+            id, meal_name, use_count,use_hour, price, enable,sort_number
+  </sql>
+  <sql id="selectMealVo">
+        select id, meal_name, use_count, use_hour, price, enable, sort_number, remark from com_meal
+  </sql>
+  <select id="selectMealList" parameterType="Meal" resultMap="BaseResultMap">
+    <include refid="selectMealVo"/>
+    <where>
+      <if test="mealName != null  and mealName != ''"> and meal_name like concat('%', #{mealName}, '%')</if>
+      <if test="useCount != null "> and use_count = #{useCount}</if>
+      <if test="useHour != null "> and use_hour = #{useHour}</if>
+      <if test="price != null "> and price = #{price}</if>
+      <if test="enable != null "> and enable = #{enable}</if>
+      <if test="sortNumber != null "> and sort_number = #{sortNumber}</if>
+    </where>
+  </select>
+
+  <select id="selectMealById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <include refid="selectMealVo"/>
+    where id = #{id}
+  </select>
+  <insert id="insertMeal" parameterType="Meal" useGeneratedKeys="true" keyProperty="id">
+    insert into com_meal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mealName != null and mealName != ''">meal_name,</if>
+      <if test="useCount != null">use_count,</if>
+      <if test="useHour != null">use_hour,</if>
+      <if test="price != null">price,</if>
+      <if test="enable != null">enable,</if>
+      <if test="sortNumber != null">sort_number,</if>
+      <if test="remark != null">remark,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mealName != null and mealName != ''">#{mealName},</if>
+      <if test="useCount != null">#{useCount},</if>
+      <if test="useHour != null">#{useHour},</if>
+      <if test="price != null">#{price},</if>
+      <if test="enable != null">#{enable},</if>
+      <if test="sortNumber != null">#{sortNumber},</if>
+      <if test="remark != null">#{remark},</if>
+    </trim>
+  </insert>
+  <update id="updateMeal" parameterType="Meal">
+    update com_meal
+    <trim prefix="SET" suffixOverrides=",">
+      <if test="mealName != null and mealName != ''">meal_name = #{mealName},</if>
+      <if test="useCount != null">use_count = #{useCount},</if>
+      <if test="useHour != null">use_hour = #{useHour},</if>
+      <if test="price != null">price = #{price},</if>
+      <if test="enable != null">enable = #{enable},</if>
+      <if test="sortNumber != null">sort_number = #{sortNumber},</if>
+      <if test="remark != null">remark = #{remark},</if>
+    </trim>
+    where id = #{id}
+  </update>
+
+  <delete id="deleteMealById" parameterType="java.lang.Integer">
+        delete from com_meal where id = #{id}
+    </delete>
+
+  <delete id="deleteMealByIds" parameterType="String">
+    delete from com_meal where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <select id="findMealByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from com_meal
+    <where>
+      meal_name = #{mealName}
+    </where>
+    limit 1 offset 0
+  </select>
+
+</mapper>

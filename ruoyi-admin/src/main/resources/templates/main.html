@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>若依介绍</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+<body class="gray-bg">
+    <div class="row  border-bottom white-bg dashboard-header">
+		<div class="col-sm-4">
+			<blockquote class="text-warning" style="font-size:14px">
+                <br>
+                <h3 class="text-danger">云服务器推荐（新用户更优惠）：</h3><br>
+                <h4 class="text-muted">【阿里云】2021上云采购季，新人爆款抢先购</h4>
+                <a target="_blank" href="https://www.aliyun.com/minisite/goods?userCode=vvwubb2a">☛☛点我前往☚☚</a><br>
+                <h4 class="text-muted">【腾讯云】2021新春采购节，爆款产品特惠，助力企业上云</h4>
+                <a target="_blank" href="https://cloud.tencent.com/act/cps/redirect?redirect=1078&cps_key=86eaf6934c31445e209ce1dacfc62db0&from=console">☛☛点我前往☚☚</a><br>
+			</blockquote>
+		</div>
+        <div class="col-sm-5">
+            <h2>若依Radius认证系统介绍</h2>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前段时间做了一个路由认证项目，网上查了好久，终于在gitee上找到了jamiesun大佬开源的<a href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">ToughRADIUS</a>，基本上符合项目的需求，但还是不能完全满足，以前一直用的若依大佬开源的<a href="https://gitee.com/y_project/RuoYi.git" target="_blank">若依后台管理框架</a>，最后把2个大佬的项目合并，再添加项目的新功能，形成了本项目最终框架。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此框架继承了2个框架的优点，以<a href="https://gitee.com/y_project/RuoYi.git" target="_blank">若依后台管理框架V4.6.0</a>做为基础框架，实现了<a href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">ToughRADIUS</a>大部分功能，支持<b>标准RADIUS协议（RFC 2865, RFC 2866）</b>，提供<b>完整的AAA实现</b>。可运用于<b>酒店WIFI认证</b>，<b>公司局域网权限认证</b>，<b>商场WIFI认证</b>，<b>其它公共场所</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。系统会陆续更新一些实用功能。</p>
+            <p>
+                <b>当前版本：</b><span>v[[${version}]]</span>
+            </p>
+            <br>
+        </div>
+        <div class="col-sm-3">
+            <h4>技术选型：</h4>
+            <ol>
+                <li>核心框架：若依后台管理系统V4.6.0</li>
+                <li>Radius框架：ToughRADIUS</li>
+                <li>数据库：MySQL5.7</li>
+                <li>JDK：1.8</li>
+                <li>路由器：MikroTik RouterOS V6.47.4</li>
+                <li>更多……</li>
+            </ol>
+        </div>
+
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>联系信息</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <br>
+                        <p><i class="fa fa-qq"></i> QQ群：<a href="https://jq.qq.com/?_wv=1027&k=qgmFICdY" target="_blank">5475847</a>
+                        </p>
+                        <br>
+                        <p>
+                            <a class="btn btn-success btn-outline" href="https://gitee.com/panweilei/ruoyi-radius.git" target="_blank">
+                                <i class="fa fa-cloud"> </i> 若依Radius认证系统源码
+                            </a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-outline" href="https://gitee.com/y_project/RuoYi.git" target="_blank">
+                                <i class="fa fa-cloud"> </i> 若依后台管理系统源码
+                            </a>
+                        </p>
+                        <p>
+                            <a class="btn btn-success btn-outline" href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">
+                                <i class="fa fa-cloud"> </i> ToughRADIUS源码
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>更新日志</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+						<div class="panel-body">
+							<div class="panel-group" id="version">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#v00">v1.0.0</a><code class="pull-right">2021.03.15</code>
+										</h4>
+									</div>
+									<div id="v00" class="panel-collapse collapse in">
+										<div class="panel-body">
+											<ol>
+												<li>若依Radius认证系统正式发布。</li>
+												<li>新增套餐管理</li>
+												<li>新增设备管理</li>
+												<li>新增用户管理</li>
+												<li>新增订单管理</li>
+												<li>新增在线管理</li>
+												<li>新增微信、支付宝H5支付</li>
+												<li>实现用户上线请求认证、动态授权、限速、强制下线</li>
+												<li>实现上网时间到期后自动下线</li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>捐赠</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="alert alert-warning">
+                            	请作者喝杯咖啡（点击图片放大）
+                        </div>
+                        <p id="pay-qrcode">
+                            <a href="javascript:;"><img th:src="@{/img/pay.jpg}" width="100%" alt="请使用手机支付宝或者微信扫码支付">
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+	    $('#pay-qrcode').click(function(){
+	        var html=$(this).html();
+	        parent.layer.open({
+	            title: false,
+	            type: 1,
+	            closeBtn:false,
+	            shadeClose:true,
+	            area: ['600px', '360px'],
+	            content: html
+	        });
+	    });
+    </script>
+</body>
+</html>

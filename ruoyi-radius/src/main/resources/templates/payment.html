@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Author Meta -->
+	<meta name="author" content="colorlib">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<title>WIFI连接</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<style type="text/css">
+		.top {
+			background: #1bbaef;
+			width: 100%;
+			height: 50px;
+			text-align:center;
+			color: #ffffff;
+			font-size: 16px;
+			padding-top:15px;
+			margin-bottom:15px;
+		}
+		.top img{
+			width: 28px;
+			height: 30px;
+		}
+		.bottom{
+			/* position:absolute; */
+			right:0px;
+			bottom:0px;
+			background:#303a80;
+			color:#fff;
+			display:block;
+			width:100%;
+			height:40px;
+			text-align:center;
+			z-index: 10;
+			margin-bottom:1px;
+		}
+		.bottom span{
+			/* position:relative; */
+			display:block;
+			left:0;
+			padding-top:10px;
+			margin-top: 10px;
+		}
+		.meal{
+			background: rgb(118,156,255);
+			width: 100%;
+			height: 80px;
+			border-radius:5px;
+		}
+		.meal:active{
+			background: rgb(218,156,155);
+		}
+		.meal img{
+			margin-left:2%;
+			margin-top:2%;
+			width: 80px;
+			height: 80px;
+		}
+		.meal-left{
+			background: url("imgs/quan.png") no-repeat center center;
+			background-size: 100%;
+			width: 80px;
+			height: 80px;
+			padding-left:9%;
+			padding-top:1%;
+			color: white;
+			float:left;
+		}
+		.meal-left-pc{
+			background: url("imgs/quan.png") no-repeat center center;
+			background-size: 100%;
+			width: 80px;
+			height: 80px;
+			padding-left:2.5%;
+			/* padding-top:1%; */
+			color: white;
+			float:left;
+		}
+		.meal-right{
+			width: 70%;
+			height: 100%;
+			float:left;
+			color: white;
+			padding-left:9%;
+		}
+		.meal-span{
+			float:right;
+		}
+	</style>
+    </head>
+     <body>
+     <div class="container body">
+	     <div class="row">
+	     	<div class="top">
+				<span>WIFI连接</span>
+			</div>
+			<div id="div1" class="col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
+				<br>
+				<h4>恭喜您，连接成功！</h4>
+				<br>
+				<span id="msg"></span>
+				<br>
+				<br>
+				<br>
+				<button type="button" id="gotopay" class="btn btn-primary btn-lg btn-block">前往充值</button>
+				<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			</div>
+		     <div id="div2" class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
+			     <form class="form-horizontal">
+				    <div class="form-group">
+				        <div class="col-xs-12 col-sm-12 col-md-12">
+				            <input type="text" class="form-control" id="phone" placeholder="请输入需要充值的手机号码">
+				            <input type="hidden" id="meal-hidden">
+				        </div>
+				    </div>
+				    <div class="form-group">
+				        <div class="col-xs-12 col-sm-12 col-md-12">
+				            <p style="color:red" id="error_span"></p>
+				        </div>
+				    </div>
+				    <div class="form-group">
+				        <div class="col-xs-12 col-sm-12 col-md-12" id="meal-div">
+				           
+				        </div>
+				    </div>
+				    <h6>请选择支付方式</h6>
+				    <hr>
+				    <div class="form-group">
+				        <div class="col-xs-12 col-sm-12 col-md-12" align="center">
+					        <img src="imgs/alipay-btn.png" id="alipay-btn" style="height: 75px;"  class="img-rounded">
+					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					        <img src="imgs/wxpay-btn.png" id="wxpay-btn" style="height: 75px;" class="img-rounded">
+				        </div>
+				    </div>
+				    <hr>
+				 </form>
+		     </div>
+	     </div>
+	     <footer>
+		     <div class="bottom">
+				<span>RuoYi Copyright</span><br />
+			 </div>
+	     </footer>
+     </div>
+	</body>
+	<!-- scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript">	
+	
+	$(document).ready(function() {	
+		
+		$("footer").hide();
+		
+		$("#wxpay-btn").click(function(){
+			if(checkInput()){
+		   	    $.ajax({
+			    	type : "POST",
+			 		url : "./wifiweb/wxpay/h5?customer=" + $("#phone").val() + "&mealId=" + $("#meal-hidden").val(),	
+			 		data : "",
+			 		contentType : "application/json;charset=utf-8",
+			 		//timeout : 5000,
+			 		dataType : "json",
+			 		success : function(data) {
+		                location.href= data.data;
+			 		}	 		
+		        });
+			}
+		});
+		$("#alipay-btn").click(function(){
+			if(checkInput()){
+				location.href= "./wifiweb/alipay/h5?customer=" + $("#phone").val() + "&mealId=" + $("#meal-hidden").val();
+			}
+		});
+		
+		$("#fullback").click(function(){
+			location.href= "./check";
+		});
+		
+		getMealList();
+		
+		$("#gotopay").click(function(){
+			$("#div1").hide();
+			$("#div2").show();
+			$("footer").show();
+		});
+		
+	});
+	//套餐选中事件
+	function selectMeal(obj,id){
+		$("div[class='meal']").css("background","RGB(118,156,255)");
+		$(obj).css("background","#3f498c");
+		$("#meal-hidden").val(id);
+	};
+	// 提交验证
+	function checkInput(){
+		
+		var cellPhoneRegExp = /^1\d{10}$/;
+		
+		var phoneNbr = $("#phone").val();
+		if(phoneNbr == ""){
+			$("#error_span").html("请输入手机号码");
+			$("#phone").focus();
+			return false;
+		}
+		if(!cellPhoneRegExp.test(phoneNbr)){
+			$("#error_span").html("您输入的号码不合法，请重新输入");
+			$("#phone").focus();
+			return false;
+		}
+		if($("#meal-hidden").val() == ""){
+			$("#error_span").html("请选择套餐");
+			scrollTo(0,0);// 返回页面顶部
+			return false;
+		}
+		return true;
+	}
+	// 获取套餐数据
+	function getMealList(){
+		$.ajax({
+			type : "GET",
+			url : "./wifiweb/getMealList",
+			data : '',
+			contentType : "application/json;charset=utf-8",
+			timeout : 5000,
+			dataType : "json",
+			success : function(data) {	
+				if(data.code == 0){
+					var plist = data.data;
+					//清空
+					$("#meal-div").empty();
+					var html = "";
+					var count = 0;
+					for (var i = 0; i < plist.length;i++) {
+						var obj = plist[i];
+						if(obj.enable == 1){
+							
+							var useHour = obj.useHour >= 24 ? (obj.useHour/24) + "&nbsp;&nbsp;天" : obj.useHour + "&nbsp;&nbsp;小时";
+							
+							count ++;
+							
+							html += "<div class=\"meal\" onclick=\"selectMeal(this," + obj.id + ")\">";
+							html += browserRedirect() ? "<div class=\"meal-left\">" : "<div class=\"meal-left-pc\">";
+							html += "	<h1>" + count + "</h1>";
+							html += "</div>";
+							html += "<div class=\"meal-right\">";
+							html += "	<h5>" + obj.mealName + "</h5>";
+							html += "	<span>时长：" + useHour + "</span>";
+							html += "	<span class=\"meal-span\">价格：" + (obj.price/100) + "元</span>";
+							html += "</div>";
+							html += "</div>";
+							html += "<hr>";
+						} 
+					}
+					//添套餐值
+					$("#meal-div").append(html);
+					
+					if(data.msg && data.msg != "ok"){
+						$("#msg").html("套餐到期时间为：<strong>" + data.msg + "</strong>");
+					}
+				}
+			}	 		
+		});
+	}
+	/**
+	* 判断是否手机端
+	*/
+	function browserRedirect(){
+        var sUserAgent = navigator.userAgent.toLowerCase();
+        if (/ipad|iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/.test(sUserAgent)) {
+            //移动端页面
+            return true;
+        } else {
+            //pc端页面
+            return false;
+        }
+    }
+	</script>
+
+</html>

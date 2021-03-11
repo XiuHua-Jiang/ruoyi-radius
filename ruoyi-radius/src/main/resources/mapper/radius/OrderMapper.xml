@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.radius.toughradius.mapper.OrderMapper">
+
+	<resultMap type="Order" id="OrderResult">
+		<result property="orderNo"    column="order_no"    />
+		<result property="customer"    column="customer"    />
+		<result property="payType"    column="pay_type"    />
+		<result property="openId"    column="open_id"    />
+		<result property="mealId"    column="meal_id"    />
+		<result property="mealName"    column="meal_name"    />
+		<result property="money"    column="money"    />
+		<result property="status"    column="status"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="tempUserName"    column="temp_user_name"    />
+	</resultMap>
+
+	<sql id="selectOrderVo">
+        select t1.order_no, t1.customer, t1.pay_type, t1.open_id, t1.meal_id, t1.money, t1.status, t1.create_time, t1.update_time, t1.temp_user_name ,t2.meal_name from com_order t1 left join com_meal t2 on t1.meal_id = t2.id
+    </sql>
+
+	<select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+		<include refid="selectOrderVo"/>
+		<where>
+			<if test="orderNo != null  and orderNo != ''"> and order_no like concat('%', #{orderNo}, '%')</if>
+			<if test="customer != null  and customer != ''"> and customer like concat('%', #{customer}, '%')</if>
+			<if test="payType != null "> and pay_type = #{payType}</if>
+			<if test="openId != null  and openId != ''"> and open_id like concat('%', #{openId}, '%')</if>
+			<if test="mealId != null "> and meal_id = #{mealId}</if>
+			<if test="money != null "> and money = #{money}</if>
+			<if test="status != null "> and status = #{status}</if>
+			<if test="tempUserName != null  and tempUserName != ''"> and temp_user_name like concat('%', #{tempUserName}, '%')</if>
+			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+			</if>
+			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+
+	<select id="selectByOrderNo" parameterType="String" resultMap="OrderResult">
+		<include refid="selectOrderVo"/>
+		where order_no = #{orderNo}
+	</select>
+	<select id="selectByOpenId" resultMap="OrderResult">
+		<include refid="selectOrderVo"/>
+		where open_id = #{openId}
+	</select>
+	<select id="query" parameterType="com.ruoyi.radius.toughradius.form.OrderForm"
+			resultMap="OrderResult">
+		select t1.*,t2.meal_name from com_order t1 left join com_meal t2 on t1.meal_id = t2.id
+		<where>
+			<if test="null != startDate">and t1.create_time &gt;= #{startDate} </if>
+			<if test="null != keyword">
+				and (
+				t1.customer  LIKE CONCAT(CONCAT('%',#{keyword},'%'))
+				or t1.open_id  LIKE CONCAT(CONCAT('%',#{keyword},'%'))
+				or t1.meal_id  LIKE CONCAT(CONCAT('%',#{keyword},'%'))
+				or t1.order_no  LIKE CONCAT(CONCAT('%',#{keyword},'%'))
+				or t2.meal_name  LIKE CONCAT(CONCAT('%',#{keyword},'%'))
+				)
+			</if>
+			<if test="null != endDate">and t1.create_time &lt;= #{endDate}</if>
+			<if test="null != payType">and t1.pay_type = #{payType}</if>
+			<if test="null != status">and t1.status = #{status}</if>
+		</where>
+		order by t1.create_time desc
+	</select>
+	<insert id="insertOrder" parameterType="Order">
+		insert into com_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null">order_no,</if>
+			<if test="customer != null">customer,</if>
+			<if test="payType != null">pay_type,</if>
+			<if test="openId != null">open_id,</if>
+			<if test="mealId != null">meal_id,</if>
+			<if test="money != null">money,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+			<if test="tempUserName != null">temp_user_name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null">#{orderNo},</if>
+			<if test="customer != null">#{customer},</if>
+			<if test="payType != null">#{payType},</if>
+			<if test="openId != null">#{openId},</if>
+			<if test="mealId != null">#{mealId},</if>
+			<if test="money != null">#{money},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="tempUserName != null">#{tempUserName},</if>
+		</trim>
+	</insert>
+
+	<update id="updateOrder" parameterType="Order">
+		update com_order
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="customer != null">customer = #{customer},</if>
+			<if test="payType != null">pay_type = #{payType},</if>
+			<if test="openId != null">open_id = #{openId},</if>
+			<if test="mealId != null">meal_id = #{mealId},</if>
+			<if test="money != null">money = #{money},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="tempUserName != null">temp_user_name = #{tempUserName},</if>
+		</trim>
+		where order_no = #{orderNo}
+	</update>
+
+	<delete id="deleteOrderById" parameterType="String">
+        delete from com_order where order_no = #{orderNo}
+    </delete>
+
+	<delete id="deleteOrderByIds" parameterType="String">
+		delete from com_order where order_no in
+		<foreach item="orderNo" collection="array" open="(" separator="," close=")">
+			#{orderNo}
+		</foreach>
+	</delete>
+
+</mapper>

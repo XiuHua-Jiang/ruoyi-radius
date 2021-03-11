@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="login-bg">
+		<title>微信支付结果页面</title>
+		<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+		<!-- global styles -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="/css/signin.css" />
+		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		<style type="text/css">
+			#codemsg{
+				color:red;
+				font-size:24px;
+				font-weight: 800;
+				padding:10px 15px;
+			}
+			.span12{
+				padding:5px 10px;
+			}
+		</style>
+	   </head>
+     <body>
+	  <div>		
+		<div id="checkLogin" class="row-fluid login-wrapper" >
+			<h3><b style="color:#337ab7"></b></h3> <br/>
+			<div class="span12 box">
+				<div class="content-wrap">
+					<h6>请确认支付是否完成</h6>
+					<p style="font-size:20px">
+						<a id="fullback" style="background-color:#429842;border-color:#227822;color:white" class="btn">重新支付</a>
+						<a id="success" style="background-color:#429842;border-color:#227822;color:white" class="btn">完成支付</a>
+					</p>
+					<p style="display:none;color:  red" id="msg">系统未查询到您的订单信息，请确认。</p>
+				</div>
+			</div>		
+		  </div>		
+		</div>
+	</body>
+	<!-- scripts -->
+	<script src="/js/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {	
+		$("#msg").hide();
+		
+		$("#fullback").click(function(){
+			window.location.href = '/wifiweb/wxpay/fullback';
+		});
+		$("#success").click(function(){
+			 $.ajax({
+		    	type : "POST",
+		 		url : "/wifiweb/wxpay/queryOrderStatus",
+		 		data : '',
+		 		contentType : "application/json;charset=utf-8",
+		 		timeout : 10000,
+		 		dataType : "json",
+		 		success : function(data) {
+		 			if(data.code == 1000){
+		 				window.location.href = 'http://www.baidu.com';
+		 			}else{
+		 				$("#msg").show();
+		 			}
+		 		}	 		
+	        }); 
+		});
+	});
+	</script>
+
+</html>

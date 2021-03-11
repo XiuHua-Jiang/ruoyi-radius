@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.radius.toughradius.mapper.RadiusMainMapper">
+
+    <resultMap type="RadiusMain" id="RadiusMainResult">
+        <result property="orderCount"    column="order_count"    />
+        <result property="orderSum"    column="order_sum"    />
+        <result property="brasCount"    column="bras_count"    />
+        <result property="tempUserCount"    column="temp_user_count"    />
+        <result property="registerUserCount"    column="register_user_count"    />
+    </resultMap>
+
+    <select id="selectRadiusStatistics" resultMap="RadiusMainResult">
+        SELECT
+            sum(t.order_count) order_count,
+            sum(t.order_sum) order_sum,
+            sum(t.bras_count) bras_count,
+            sum(t.temp_user_count) temp_user_count,
+            sum(t.register_user_count) register_user_count
+        FROM
+            (
+                SELECT
+                    count(order_no) order_count,
+                    SUM(money) order_sum,
+                    0 bras_count,
+                    0 temp_user_count,
+                    0 register_user_count
+                FROM
+                    com_order
+                WHERE
+                    STATUS = 1
+                UNION
+                    SELECT
+                        0 order_count,
+                        0 order_sum,
+                        count(id) bras_count,
+                        0 temp_user_count,
+                        0 register_user_count
+                    FROM
+                        tr_bras
+                    WHERE
+                        `status` = 'enabled'
+                    UNION
+                        SELECT
+                            0 order_count,
+                            0 order_sum,
+                            0 bras_count,
+                            sum(
+                                CASE
+                                WHEN subscriber LIKE 'zchx%' THEN
+                                    1
+                                ELSE
+                                    0
+                                END
+                            ) temp_user_count,
+                            sum(
+                                CASE
+                                WHEN subscriber LIKE 'zchx%' THEN
+                                    0
+                                ELSE
+                                    1
+                                END
+                            ) register_user_count
+                        FROM
+                            tr_subscribe
+            ) t
+    </select>
+
+</mapper>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.radius.toughradius.mapper.SubscribeMapper">
+
+	<resultMap type="Subscribe" id="SubscribeResult">
+		<result property="id"    column="id"    />
+		<result property="nodeId"    column="node_id"    />
+		<result property="subscriber"    column="subscriber"    />
+		<result property="realname"    column="realname"    />
+		<result property="password"    column="password"    />
+		<result property="domain"    column="domain"    />
+		<result property="addrPool"    column="addr_pool"    />
+		<result property="policy"    column="policy"    />
+		<result property="isOnline"    column="is_online"    />
+		<result property="activeNum"    column="active_num"    />
+		<result property="bindMac"    column="bind_mac"    />
+		<result property="bindVlan"    column="bind_vlan"    />
+		<result property="ipAddr"    column="ip_addr"    />
+		<result property="macAddr"    column="mac_addr"    />
+		<result property="inVlan"    column="in_vlan"    />
+		<result property="outVlan"    column="out_vlan"    />
+		<result property="upRate"    column="up_rate"    />
+		<result property="downRate"    column="down_rate"    />
+		<result property="upPeakRate"    column="up_peak_rate"    />
+		<result property="downPeakRate"    column="down_peak_rate"    />
+		<result property="upRateCode"    column="up_rate_code"    />
+		<result property="downRateCode"    column="down_rate_code"    />
+		<result property="status"    column="status"    />
+		<result property="remark"    column="remark"    />
+		<result property="beginTime"    column="begin_time"    />
+		<result property="expireTime"    column="expire_time"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateTime"    column="update_time"    />
+	</resultMap>
+
+	<sql id="selectSubscribeVo">
+        select id, node_id, subscriber, realname, password, domain, addr_pool, policy, is_online, active_num, bind_mac, bind_vlan, ip_addr, mac_addr, in_vlan, out_vlan, up_rate, down_rate, up_peak_rate, down_peak_rate, up_rate_code, down_rate_code, status, remark, begin_time, expire_time, create_time, update_time from tr_subscribe
+    </sql>
+
+	<select id="selectSubscribeList" parameterType="Subscribe" resultMap="SubscribeResult">
+		<include refid="selectSubscribeVo"/>
+		<where>
+			<if test="nodeId != null "> and node_id = #{nodeId}</if>
+			<if test="subscriber != null  and subscriber != ''"> and subscriber like concat('%', #{subscriber}, '%')</if>
+			<if test="realname != null  and realname != ''"> and realname like concat('%', #{realname}, '%')</if>
+			<if test="password != null  and password != ''"> and password = #{password}</if>
+			<if test="domain != null  and domain != ''"> and domain = #{domain}</if>
+			<if test="addrPool != null  and addrPool != ''"> and addr_pool = #{addrPool}</if>
+			<if test="policy != null  and policy != ''"> and policy = #{policy}</if>
+			<if test="isOnline != null "> and is_online = #{isOnline}</if>
+			<if test="activeNum != null "> and active_num = #{activeNum}</if>
+			<if test="bindMac != null "> and bind_mac = #{bindMac}</if>
+			<if test="bindVlan != null "> and bind_vlan = #{bindVlan}</if>
+			<if test="ipAddr != null  and ipAddr != ''"> and ip_addr = #{ipAddr}</if>
+			<if test="macAddr != null  and macAddr != ''"> and mac_addr = #{macAddr}</if>
+			<if test="inVlan != null "> and in_vlan = #{inVlan}</if>
+			<if test="outVlan != null "> and out_vlan = #{outVlan}</if>
+			<if test="upRate != null "> and up_rate = #{upRate}</if>
+			<if test="downRate != null "> and down_rate = #{downRate}</if>
+			<if test="upPeakRate != null "> and up_peak_rate = #{upPeakRate}</if>
+			<if test="downPeakRate != null "> and down_peak_rate = #{downPeakRate}</if>
+			<if test="upRateCode != null  and upRateCode != ''"> and up_rate_code = #{upRateCode}</if>
+			<if test="downRateCode != null  and downRateCode != ''"> and down_rate_code = #{downRateCode}</if>
+			<if test="status != null and status != '' and status == 'enabled'"> and expire_time &gt;  NOW() and status = #{status}</if>
+			<if test="status != null and status != '' and status == 'disabled'"> and status = #{status}</if>
+			<if test="status != null and status != '' and status == 'expire'  "> and (expire_time &lt;  NOW() or status = #{status})</if>
+			<if test="beginTime != null "> and begin_time = #{beginTime}</if>
+			<if test="expireTime != null "> and expire_time = #{expireTime}</if>
+		</where>
+	</select>
+
+	<select id="selectSubscribeById" parameterType="Long" resultMap="SubscribeResult">
+		<include refid="selectSubscribeVo"/>
+		where id = #{id}
+	</select>
+
+	<insert id="insertSubscribe" parameterType="Subscribe" useGeneratedKeys="true" keyProperty="id">
+		insert into tr_subscribe
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="nodeId != null">node_id,</if>
+			<if test="subscriber != null">subscriber,</if>
+			<if test="realname != null">realname,</if>
+			<if test="password != null and password != ''">password,</if>
+			<if test="domain != null">domain,</if>
+			<if test="addrPool != null">addr_pool,</if>
+			<if test="policy != null">policy,</if>
+			<if test="isOnline != null">is_online,</if>
+			<if test="activeNum != null">active_num,</if>
+			<if test="bindMac != null">bind_mac,</if>
+			<if test="bindVlan != null">bind_vlan,</if>
+			<if test="ipAddr != null">ip_addr,</if>
+			<if test="macAddr != null">mac_addr,</if>
+			<if test="inVlan != null">in_vlan,</if>
+			<if test="outVlan != null">out_vlan,</if>
+			<if test="upRate != null">up_rate,</if>
+			<if test="downRate != null">down_rate,</if>
+			<if test="upPeakRate != null">up_peak_rate,</if>
+			<if test="downPeakRate != null">down_peak_rate,</if>
+			<if test="upRateCode != null">up_rate_code,</if>
+			<if test="downRateCode != null">down_rate_code,</if>
+			<if test="status != null">status,</if>
+			<if test="remark != null">remark,</if>
+			<if test="beginTime != null">begin_time,</if>
+			<if test="expireTime != null">expire_time,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="nodeId != null">#{nodeId},</if>
+			<if test="subscriber != null">#{subscriber},</if>
+			<if test="realname != null">#{realname},</if>
+			<if test="password != null and password != ''">#{password},</if>
+			<if test="domain != null">#{domain},</if>
+			<if test="addrPool != null">#{addrPool},</if>
+			<if test="policy != null">#{policy},</if>
+			<if test="isOnline != null">#{isOnline},</if>
+			<if test="activeNum != null">#{activeNum},</if>
+			<if test="bindMac != null">#{bindMac},</if>
+			<if test="bindVlan != null">#{bindVlan},</if>
+			<if test="ipAddr != null">#{ipAddr},</if>
+			<if test="macAddr != null">#{macAddr},</if>
+			<if test="inVlan != null">#{inVlan},</if>
+			<if test="outVlan != null">#{outVlan},</if>
+			<if test="upRate != null">#{upRate},</if>
+			<if test="downRate != null">#{downRate},</if>
+			<if test="upPeakRate != null">#{upPeakRate},</if>
+			<if test="downPeakRate != null">#{downPeakRate},</if>
+			<if test="upRateCode != null">#{upRateCode},</if>
+			<if test="downRateCode != null">#{downRateCode},</if>
+			<if test="status != null">#{status},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="beginTime != null">#{beginTime},</if>
+			<if test="expireTime != null">#{expireTime},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+	</insert>
+
+	<update id="updateSubscribe" parameterType="Subscribe">
+		update tr_subscribe
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="nodeId != null">node_id = #{nodeId},</if>
+			<if test="subscriber != null">subscriber = #{subscriber},</if>
+			<if test="realname != null">realname = #{realname},</if>
+			<if test="password != null and password != ''">password = #{password},</if>
+			<if test="domain != null">domain = #{domain},</if>
+			<if test="addrPool != null">addr_pool = #{addrPool},</if>
+			<if test="policy != null">policy = #{policy},</if>
+			<if test="isOnline != null">is_online = #{isOnline},</if>
+			<if test="activeNum != null">active_num = #{activeNum},</if>
+			<if test="bindMac != null">bind_mac = #{bindMac},</if>
+			<if test="bindVlan != null">bind_vlan = #{bindVlan},</if>
+			<if test="ipAddr != null">ip_addr = #{ipAddr},</if>
+			<if test="macAddr != null">mac_addr = #{macAddr},</if>
+			<if test="inVlan != null">in_vlan = #{inVlan},</if>
+			<if test="outVlan != null">out_vlan = #{outVlan},</if>
+			<if test="upRate != null">up_rate = #{upRate},</if>
+			<if test="downRate != null">down_rate = #{downRate},</if>
+			<if test="upPeakRate != null">up_peak_rate = #{upPeakRate},</if>
+			<if test="downPeakRate != null">down_peak_rate = #{downPeakRate},</if>
+			<if test="upRateCode != null">up_rate_code = #{upRateCode},</if>
+			<if test="downRateCode != null">down_rate_code = #{downRateCode},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="beginTime != null">begin_time = #{beginTime},</if>
+			<if test="expireTime != null">expire_time = #{expireTime},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<delete id="deleteSubscribeById" parameterType="Long">
+        delete from tr_subscribe where id = #{id}
+    </delete>
+
+	<delete id="deleteSubscribeByIds" parameterType="String">
+		delete from tr_subscribe where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="findSubscribe" resultMap="SubscribeResult" useCache="false">
+		<include refid="selectSubscribeVo"/>
+		WHERE subscriber=#{username}
+	</select>
+	<select id="findLastUpdateUser" parameterType="java.lang.String"  resultMap="SubscribeResult" useCache="false">
+		<![CDATA[
+		SELECT subscriber, update_time FROM tr_subscribe
+		WHERE update_time >= #{lastUpdate}
+		]]>
+	</select>
+	<select id="findByMacAddr" resultMap="SubscribeResult" useCache="false">
+		<include refid="selectSubscribeVo"/>
+		where mac_addr=#{macAddr} and subscriber like CONCAT('','zchx','%') and expire_time &gt;= #{lastTime}
+	</select>
+	<update id="updateMacAddr">
+		update tr_subscribe
+		set mac_addr=#{macAddr}, update_time=NOW()
+		where subscriber=#{username} and status='enabled'
+	</update>
+
+	<update id="updateInValn">
+		update tr_subscribe
+		set in_vlan=#{inValn}, update_time=NOW()
+		where subscriber=#{username} and status='enabled'
+	</update>
+
+	<update id="updateOutValn" >
+		update tr_subscribe
+		set out_vlan=#{outValn}, update_time=NOW()
+		where subscriber=#{username} and status='enabled'
+	</update>
+
+	<update id="release">
+		update tr_subscribe set mac_addr='', in_vlan=0, out_vlan=0, update_time=NOW()  where id in (#{ids})
+	</update>
+</mapper>

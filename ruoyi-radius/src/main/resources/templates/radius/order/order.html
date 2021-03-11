@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('订单管理列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>订单号：</label>
+                                <input type="text" name="orderNo"/>
+                            </li>
+                            <li>
+                                <label>客户信息：</label>
+                                <input type="text" name="customer"/>
+                            </li>
+                            <li>
+                                <label>支付类型：</label>
+                                <select name="payType" th:with="type=${@dict.getType('radius_pay_type')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}">
+                                    </option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>订单状态：</label>
+                                <select name="status" th:with="type=${@dict.getType('radius_order_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}">
+                                    </option>
+                                </select>
+                            </li>
+                            <li class="select-time">
+                                <label>下单时间： </label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('radius:order:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('radius:order:remove')}]];
+        var prefix = ctx + "radius/order";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                showFooter: true,
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "订单管理",
+                footerStyle: footerStyle,
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'orderNo',
+                    title: '订单号'
+                },
+                {
+                    field: 'customer',
+                    title: '客户信息'
+                },
+                {
+                    field: 'payType',
+                    title: '支付类型',
+                    // 格式化数据字典
+                    formatter: function(value, row, index) {
+                        var datas = [[${@dict.getType('radius_pay_type')}]];
+                        return $.table.selectDictLabel(datas, value);
+                    }
+                },
+                {
+                    field: 'status',
+                    title: '订单状态',
+                    // 格式化数据字典
+                    formatter: function(value, row, index) {
+                        var datas = [[${@dict.getType('radius_order_status')}]];
+                        return $.table.selectDictLabel(datas, value);
+                    }
+                },
+                {
+                    field: 'openId',
+                    title: '第三方订单号',
+                    formatter: function(value, row, index) {
+                        if(value && value.indexOf("http") > -1) return "";
+                        return value;
+                    }
+                },
+                {
+                    field: 'mealName',
+                    title: '套餐名称'
+                },
+                {
+                    field: 'money',
+                    title: '订单金额（元）',
+                    formatter: function(value, row, index) {
+                        return value / 100;
+                    },
+                    footerFormatter:function (value) {
+                        var money = 0;
+                        for (var i in value) {
+                            money += value[i].money;
+                        }
+                        return "总金额：" + money / 100;
+                    }
+                },
+                {
+                    field: 'createTime',
+                    title: '下单时间'
+                },
+                {
+                    field: 'updateTime',
+                    title: '更新时间'
+                },
+                {
+                    field: 'tempUserName',
+                    title: '临时账号'
+                }]
+            };
+            $.table.init(options);
+        });
+        function footerStyle(column) {
+            return {
+//         	    money: {
+//         	        classes: 'class'
+//         	    },
+                money: {
+                    css: { color: 'red', 'font-weight': 'normal' }
+                }
+            }[column.field]
+        }
+    </script>
+</body>
+</html>
