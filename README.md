@@ -3,10 +3,10 @@
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前段时间做了一个路由认证项目，网上查了好久，终于在gitee上找到了jamiesun大佬开源的<a href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">ToughRADIUS</a>，基本上符合项目的需求，但还是不能完全满足，以前一直用的若依大佬开源的<a href="https://gitee.com/y_project/RuoYi.git" target="_blank">若依后台管理框架</a>，最后把2个大佬的项目合并，再添加项目的新功能，形成了本项目最终框架。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此框架继承了2个框架的优点，以<a href="https://gitee.com/y_project/RuoYi.git" target="_blank">若依后台管理框架V4.6.0</a>做为基础框架，实现了<a href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">ToughRADIUS</a>大部分功能，支持<b>标准RADIUS协议（RFC 2865, RFC 2866）</b>，提供<b>完整的AAA实现</b>。可运用于<b>酒店WIFI认证</b>，<b>公司局域网权限认证</b>，<b>商场WIFI认证</b>，<b>其它公共场所</b>等等，当然，您也可以对她进行深度定制，以做出更强系统。所有前端后台代码封装过后十分精简易上手，出错概率低。系统会陆续更新一些实用功能。</p>
 
-* 感谢 若依后台管理 框架。[点我前往](https://gitee.com/y_project/RuoYi.git)
-* 感谢 ToughRADIUS 框架。[点我前往](https://gitee.com/jamiesun/ToughRADIUS.git)
-* 阿里云折扣场：[点我前往](https://www.aliyun.com/minisite/goods?userCode=vvwubb2a)
-* 腾讯云秒杀场：[点我前往](https://cloud.tencent.com/act/cps/redirect?redirect=1078&cps_key=86eaf6934c31445e209ce1dacfc62db0&from=console)
+* 感谢 若依后台管理 框架。<a href="https://gitee.com/y_project/RuoYi.git" target="_blank">点我前往</a>
+* 感谢 ToughRADIUS 框架。<a href="https://gitee.com/jamiesun/ToughRADIUS.git" target="_blank">点我前往</a>
+* 阿里云折扣场：<a href="https://www.aliyun.com/minisite/goods?userCode=vvwubb2a" target="_blank">点我前往</a>
+* 腾讯云秒杀场：<a href="https://cloud.tencent.com/act/cps/redirect?redirect=1078&cps_key=86eaf6934c31445e209ce1dacfc62db0&from=console" target="_blank">点我前往</a>
 
 ## 运行环境
 
@@ -18,7 +18,7 @@ JDK：>= 1.8
 
 - 数据库
 直接导入项目中sql目录下 ruoyiradius-init.sql 即可
-- 其它部署相关内容可参考若依API [点我前往](http://doc.ruoyi.vip/ruoyi/)
+- 其它部署相关内容可参考若依API。 <a href="http://doc.ruoyi.vip/ruoyi/" target="_blank">点我前往</a>
 
 ## 支持的路由器厂商
 
@@ -68,9 +68,9 @@ JDK：>= 1.8
 
 - admin/admin123  
 
-演示地址： [点我进入](http://39.108.211.5:8090/index) 
+演示地址： <a href="http://39.108.211.5:8090/index" target="_blank">点我前往</a>
 
 
 ## 交流群
 
-QQ群： 5475847 [点我进入](https://jq.qq.com/?_wv=1027&k=xJHpvKp1)
+QQ群： 5475847 <a href="https://jq.qq.com/?_wv=1027&k=xJHpvKp1" target="_blank">点我前往</a>
