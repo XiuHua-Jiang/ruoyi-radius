@@ -11,7 +11,7 @@ ruoyi:
   # 文件路径 示例（ Windows配置E:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath /opt/server/uploadPath）
   profile: /opt/server/ruoyiradius/uploadPath
   # 获取ip地址开关
-  addressEnabled: false
+  addressEnabled: true
 
 # 开发环境配置
 server:
