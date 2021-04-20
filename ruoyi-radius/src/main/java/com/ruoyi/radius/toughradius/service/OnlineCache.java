@@ -565,13 +565,14 @@ public class OnlineCache {
         }
         for (RadiusOnline online : copyList) {
             // 匹配查询条件
-            if (!(online.getRealname().contains(realName) || online.getRealname().contains(userName))) {
-                continue;
-            }
-            try {
-                onlineList.add(online.clone());
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+            if((ValidateUtil.isNotEmpty(online.getRealname()) && ValidateUtil.isNotEmpty(realName) && online.getRealname().contains(realName)) ||
+                    (ValidateUtil.isNotEmpty(online.getUsername()) && ValidateUtil.isNotEmpty(userName) && online.getUsername().contains(userName))
+            ){
+                try {
+                    onlineList.add(online.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return onlineList;
