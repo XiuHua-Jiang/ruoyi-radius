@@ -10,6 +10,11 @@ ruoyi:
   demoEnabled: true
   # 文件路径 示例（ Windows配置E:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath /opt/server/uploadPath）
   profile: /opt/server/ruoyiradius/uploadPath
+  # 数据库备份文件存放路径
+  #backupPath: E:/backup/
+  backupPath: /opt/server/ruoyiradius/backup/
+  # 数据库备份文件保留天数
+  clearDays: 5
   # 获取ip地址开关
   addressEnabled: true
 
