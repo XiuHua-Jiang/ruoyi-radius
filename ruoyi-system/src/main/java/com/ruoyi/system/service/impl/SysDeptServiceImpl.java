@@ -59,7 +59,7 @@ public class SysDeptServiceImpl implements ISysDeptService
     /**
      * 查询部门管理树（排除下级）
      * 
-     * @param deptId 部门ID
+     * @param dept 部门
      * @return 所有部门信息
      */
     @Override
@@ -259,7 +259,8 @@ public class SysDeptServiceImpl implements ISysDeptService
         List<SysDept> children = deptMapper.selectChildrenDeptById(deptId);
         for (SysDept child : children)
         {
-            child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
+//            child.setAncestors(child.getAncestors().replace(oldAncestors, newAncestors));
+            child.setAncestors(child.getAncestors().replaceFirst(oldAncestors, newAncestors));
         }
         if (children.size() > 0)
         {
