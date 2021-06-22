@@ -60,7 +60,7 @@ public class SysOperlogController extends BaseController
         ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
         return util.exportExcel(list, "操作日志");
     }
-
+    @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/remove")
     @ResponseBody
