@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.servlet.Filter;
+
+import com.ruoyi.common.utils.security.CipherUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -107,8 +109,8 @@ public class ShiroConfig
     /**
      * 设置cipherKey密钥
      */
-    @Value("${shiro.cookie.cipherKey}")
-    private String cipherKey;
+    //@Value("${shiro.cookie.cipherKey}")
+    //private String cipherKey;
 
     /**
      * 登录地址
@@ -364,7 +366,8 @@ public class ShiroConfig
     {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
-        cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));
+        //cookieRememberMeManager.setCipherKey(Base64.decode(cipherKey));
+        cookieRememberMeManager.setCipherKey(CipherUtils.generateNewKey(128, "AES").getEncoded());
         return cookieRememberMeManager;
     }
 
