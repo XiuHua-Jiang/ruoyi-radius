@@ -713,7 +713,7 @@ public class OnlineCache {
 	            
 	            // 到期时间   单位秒
 	            if(user.getExpireTime().getTime() > new Date().getTime()){
-	            	dmreq.addAttribute("Session-Timeout",String.valueOf(DateTimeUtil.compareDay(new Date(user.getExpireTime().getTime()), new Date())));
+	            	dmreq.addAttribute("Session-Timeout",String.valueOf(DateTimeUtil.compareSecond(new Date(user.getExpireTime().getTime()), new Date())));
 	            }else{
 	            	dmreq.addAttribute("Session-Timeout",String.valueOf(0));
 	            }
