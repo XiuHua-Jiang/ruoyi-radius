@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.IpUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -74,8 +75,8 @@ public class WXPayController {
 	@ResponseBody
 	public JSONObject wechatPay(HttpServletRequest request) {
 		logger.info("进入方法：H5支付",Memarylogger.WXPAY);
-		//订单来源ip
-		String bill_create_ip = request.getRemoteAddr();
+		//订单来源ip  获取真实的IP地址 防止使用了代理后取不到真实IP导致支付不了
+		String bill_create_ip = IpUtils.getIpAddr(request);//request.getRemoteAddr();
 		String mweb_url = service.wxH5Pay(request,bill_create_ip);
 		
 		return ResultMsgUtils.success(mweb_url);
