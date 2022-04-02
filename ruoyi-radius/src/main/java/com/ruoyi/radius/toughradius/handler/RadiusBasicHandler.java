@@ -373,9 +373,11 @@ public abstract class RadiusBasicHandler extends IoHandlerAdapter {
         if (timeout <= 0 ) {
             if(radiusConfig.isAllowNegative()){
                 timeout = -1;
-            }else{
-                timeout = 86400;
             }
+            // 网友提出的bug,在认证通过后的几秒到期，会出现多加一天上网时间的情况，不给默认值了，返回本身到期时间
+            /*else{
+                timeout = 86400;
+            }*/
         }
 
         if (onlineCache.isLimitOver(user.getSubscriber(),user.getActiveNum(),user.getMacAddr())) {
